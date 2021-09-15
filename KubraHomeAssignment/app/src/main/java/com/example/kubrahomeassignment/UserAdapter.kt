@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.user_item_view.view.*
 class UserAdapter(private val users: List<UserService.User>) :
     RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
-    var onClickUser: ((String) -> Unit)? = null
+    var onClickUser: ((Int) -> Unit)? = null
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(user: UserService.User) {
@@ -37,6 +37,11 @@ class UserAdapter(private val users: List<UserService.User>) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.bind(users[position])
+
+        viewHolder.itemView.user_layout.setOnClickListener {
+            onClickUser?.let{ it(users[position].id)}
+        }
+
     }
 
 

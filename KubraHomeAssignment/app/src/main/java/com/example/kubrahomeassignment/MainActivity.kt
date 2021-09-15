@@ -1,5 +1,6 @@
 package com.example.kubrahomeassignment
 
+import android.content.*
 import android.os.*
 import android.widget.*
 import androidx.appcompat.app.*
@@ -43,7 +44,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadViews(users: List<UserService.User>) {
-        val adapter = UserAdapter(users)
+        val adapter = UserAdapter(users).apply {
+            onClickUser = { userId ->
+                val intent =
+                    Intent(applicationContext, UserPostActivity::class.java)
+                intent.putExtra("userId", userId.toString())
+                startActivity(intent)
+            }
+        }
         recycler_view_users.adapter = adapter
     }
 }

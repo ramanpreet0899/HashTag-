@@ -29,4 +29,14 @@ interface UserService {
 
     @GET("users")
     fun getUsers(): Call<List<User>>
+
+    data class UserPost(
+        val userId : Int,
+        val id: Int,
+        val title: String,
+        val body: String
+    )
+
+    @GET("posts")
+    fun getUserPosts(@Query("userId")userId: Int): Call<List<UserPost>>
 }
