@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KubraHomeAssignment</string>
+    <string name="create_post">Create Post</string>
+    <string name="title_of_the_post">Title Of the Post</string>
+    <string name="body_of_the_post">Body of the Post</string>
+    <string name="submit_post">Submit Post</string>
 </resources>

@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KubraHomeAssignment"
         android:usesCleartextTraffic="true">
-        <activity android:name=".UserPostActivity"></activity>
+        <activity android:name=".CreatePostActivity"></activity>
+        <activity android:name=".UserPostActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
