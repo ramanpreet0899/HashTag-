@@ -12,6 +12,7 @@ import retrofit2.*
 
 class UserPostActivity : AppCompatActivity() {
     private val postList: MutableList<UserService.UserPost> = mutableListOf()
+    private var postAdapter = PostAdapter(postList)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_post)
@@ -35,8 +36,10 @@ class UserPostActivity : AppCompatActivity() {
                 response: Response<List<UserService.UserPost>>?
             ) {
                 response?.body()?.let {
-                    postList.addAll(it)
                     runOnUiThread {
+                        postList.clear()
+                        postList.addAll(it)
+                        postAdapter = PostAdapter(postList)
                         loadViews()
                     }
                 }
@@ -44,11 +47,9 @@ class UserPostActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<UserService.UserPost>>?, t: Throwable?) {
-                Toast.makeText(
-                    applicationContext,
-                    t?.localizedMessage.toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
+                runOnUiThread {
+                    showToast(t?.localizedMessage!!.toString())
+                }
             }
 
         })
@@ -72,9 +73,15 @@ class UserPostActivity : AppCompatActivity() {
                         val deleteCall = service.deletePost(postId)
 
                         if(deleteCall.code().toString() == "200"){
-                            postList.removeAt(postPosition)
-
-                            Toast.makeText(applicationContext, "Post Deleted Successfully", Toast.LENGTH_SHORT).show()
+                            runOnUiThread {
+                                postList.removeAt(postPosition)
+                                postAdapter.notifyItemRemoved(postPosition)
+                                showToast("Post Deleted Successfully.")
+                            }
+                        }else{
+                            runOnUiThread {
+                                showToast("Failed to delete the post.")
+                            }
                         }
                     }
 
@@ -87,7 +94,10 @@ class UserPostActivity : AppCompatActivity() {
     }
 
     private fun loadViews() {
-        val postAdapter = PostAdapter(postList)
         recycler_view_posts.adapter = postAdapter
+    }
+
+    private fun showToast(message : String){
+        Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
     }
 }

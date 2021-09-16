@@ -32,11 +32,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<UserService.User>>?, t: Throwable?) {
-                Toast.makeText(
-                    applicationContext,
-                    t?.localizedMessage.toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
+                runOnUiThread {
+                    showToast(t?.localizedMessage!!.toString())
+                }
             }
 
         })
@@ -53,5 +51,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         recycler_view_users.adapter = adapter
+    }
+
+    private fun showToast(message : String){
+        Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
     }
 }
