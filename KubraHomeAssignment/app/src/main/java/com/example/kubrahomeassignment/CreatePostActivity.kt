@@ -12,16 +12,13 @@ class CreatePostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Create Post"
+
         val title = create_post_title_content.text.toString()
         val body = create_post_body_content.text.toString()
 
         val userId = intent.getStringExtra("userId").toString().toInt()
-
-//        val createPost = UserService.CreatePost(
-//            title = title,
-//            body = body,
-//            userId = userId
-//        )
 
         val provider = UserProvider()
         val service = provider.retrofit.create(UserService::class.java)
@@ -32,7 +29,7 @@ class CreatePostActivity : AppCompatActivity() {
             call.enqueue(object : Callback<UserService.CreatePostResponse> {
                 override fun onResponse(call: Call<UserService.CreatePostResponse>, response: Response<UserService.CreatePostResponse>) {
                     runOnUiThread{
-                        navigateToPostsActivity(userId)
+                        navigateToPostsActivity()
                     }
                 }
 
@@ -49,7 +46,7 @@ class CreatePostActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToPostsActivity(userId: Int) {
+    private fun navigateToPostsActivity() {
         finish()
     }
 }

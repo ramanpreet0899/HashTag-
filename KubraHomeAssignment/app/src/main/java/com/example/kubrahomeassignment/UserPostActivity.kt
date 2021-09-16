@@ -17,6 +17,8 @@ class UserPostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_post)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Posts"
 
         val userId = intent.getStringExtra("userId").toString().toInt()
 //click view event to create post

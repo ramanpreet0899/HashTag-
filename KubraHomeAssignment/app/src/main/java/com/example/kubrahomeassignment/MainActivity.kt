@@ -12,6 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        supportActionBar?.title = "Users"
+
 
         val provider = UserProvider()
         val service = provider.retrofit.create(UserService::class.java)
